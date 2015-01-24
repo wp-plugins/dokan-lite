@@ -69,17 +69,17 @@ A multi-vendor plugin leveraging the power of WooCommerce.
      * Dokan Pro has update and support option for customer.
      * Dokan tools option has page installer and Sync table option
   * Settings tab has those option like-
-     * General
+     * **General**
         * Admin can enable/disable the map on the store page.
         * Admin can enable/disable the contact form on the store page
         * Admin can also enable/disable the store sidebar from theme.
-     * Selling Option
+     * **Selling Options**
         * Admin can manage new product status
         * Admin can set the order status for withdraw
         * Admin can seth threshold withdraw day for the seller
         * Admin can change the seller store URL
         * Admin can also enable/disable the permission of review editing for the seller
-  * Widgets
+  * **Widgets**
      * Best seller widget
      * Featured seller widget
      * Store contact widget
