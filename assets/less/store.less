@@ -1,0 +1,127 @@
+// store
+.dokan-single-store {
+    margin: 0;
+
+    .profile-frame {
+        height: 300px;
+        padding: 0px;
+        margin-bottom: 30px;
+        position: relative;
+        background-size: 100% auto;
+        background-color: #eee;
+
+        .profile-info-box {
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            width: 40%;
+
+            a {
+                color: #ccc;
+            }
+
+            &:hover {
+                color: #fff;
+            }
+
+            .profile-img {
+                height: 105px;
+                text-align: center;
+                padding-top: 15px;
+
+                img {
+                    background: #000;
+                    border-radius: 500px;
+                }
+            }
+
+            .profile-info {
+                margin-left: 15%;
+
+                .dokan-store-info {
+                    list-style: none;
+
+                    .dokan-store-phone,
+                    .dokan-store-email {
+                        a {
+                            text-decoration: none;
+                        }
+                    }
+                }
+
+                li {
+                    padding-bottom: 8px;
+
+                    &.store-name {
+                        font-weight: bold;
+                        padding-bottom: 10px;
+                        font-size: 15px;
+                    }
+                }
+
+                i {
+                    // color: @iconColor;
+                    font-weight: bold;
+                    float: left;
+                    margin-left: -25px;
+                    margin-top: 4px;
+                }
+
+                ul.store-social {
+                    list-style: none;
+
+                    li {
+                        display: inline-block;
+                    }
+
+                    i {
+                        color: #fff;
+                        font-size: 20px;
+                        float: none;
+                        font-weight: normal;
+                        margin: 0;
+                    }
+                }
+
+                .seller-rating {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .store-review-wrap {
+        h2.headline {
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+    }
+}
+
+// shortcode seller listing
+ul.dokan-seller-wrap {
+    .clearfix();
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li.dokan-single-seller {
+        float: left;
+        width: 48%;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &:nth-child(2n+1) {
+            margin-right: 3%;
+            clear: left;
+        }
+
+        .dokan-store-thumbnail {
+
+            .dokan-store-caption {
+
+            }
+        }
+    }
+}
