@@ -19,39 +19,46 @@ A multi-vendor plugin leveraging the power of WooCommerce.
 
 
 = Features =
- **Marketplace with Independent Stores**
-   * Every seller gets their own store with a unique URL and branding.
-   * Show a store banner with contact details
-   * Contact seller and show the store location map. (Pro feature)
+**Marketplace with Independent Stores**
 
- **Dashboard For Each Seller**
-   * Don't need to visit the WordPress admin area.
-   * Sellers can manage their products and orders from your site frontend.
+  * Every seller gets their own store with a unique URL and branding.
+  * Show a store banner with contact details
+  * Contact seller and show the store location map. (Pro feature)
 
- **Earn From Each Sale**
-   * As a site owner, get a cut from each sale. That way you and your users both earn money.
-   * Take a percentage from each sale. e.g. 20% goes to site owner for every order.
-   * Per seller percentage override. Take different cut from different seller. (Pro feature)
+**Dashboard For Each Seller**
 
- **Product Management**
-   * Create and manage your products from the frontend.
-   * Create simple and/or variable products. (Pro Feature)
-   * Sellers have option to manage product shipping, attributes. (Pro Feature)
-   * Seller can mange downloadable product permission: expiry date and download limit. (Pro Feature)
+  * Don't need to visit the WordPress admin area.
+  * Sellers can manage their products and orders from your site frontend.
 
- **Reports (Pro Feature)**
-   * Every seller can see his/her own sales report and see a bird eye view on the sales they are making.
-   * Order overview and filter by Sale by date, Top sellers, Top earners.
-   * Export order reports
+**Earn From Each Sale**
 
- **Coupon Management (Pro Feature)**
-   * Manage and offer discounts for each products.
-   * Set expiry and restriction for coupons.
+  * As a site owner, get a cut from each sale. That way you and your users both earn money.
+  * Take a percentage from each sale. e.g. 20% goes to site owner for every order.
+  * Per seller percentage override. Take different cut from different seller. (Pro feature)
 
- **Manage Product Reviews (Pro Feature)**
-   * You can manage the reviews on your products.
-   * Approve/unapprove reviews.
-   * See all the reviews for your products left by customers.
+**Product Management**
+
+  * Create and manage your products from the frontend.
+  * Create simple and/or variable products. (Pro Feature)
+  * Sellers have option to manage product shipping, attributes. (Pro Feature)
+  * Seller can mange downloadable product permission: expiry date and download limit. (Pro Feature)
+
+**Reports (Pro Feature)**
+
+  * Every seller can see his/her own sales report and see a bird eye view on the sales they are making.
+  * Order overview and filter by Sale by date, Top sellers, Top earners.
+  * Export order reports
+
+**Coupon Management (Pro Feature)**
+
+  * Manage and offer discounts for each products.
+  * Set expiry and restriction for coupons.
+
+**Manage Product Reviews (Pro Feature)**
+
+  * You can manage the reviews on your products.
+  * Approve/unapprove reviews.
+  * See all the reviews for your products left by customers.
 
 
 = Additional Pro Features =
@@ -62,16 +69,21 @@ A multi-vendor plugin leveraging the power of WooCommerce.
      * Dokan Pro has update and support option for customer.
      * Dokan tools option has page installer and Sync table option
   * Settings tab has those option like-
-1. General
-    a. Admin can enable/disable the map on the store page.
-    b. Admin can enable/disable the contact form on the store page
-    c. Admin can also enable/disable the store sidebar from theme.
-1. Selling Option
-    d. Admin can manage new product status
-    e. Admin can set the order status for withdraw
-    f. Admin can seth threshold withdraw day for the seller
-    g. Admin can change the seller store URL
-    h. Admin can also enable/disable the permission of review editing for the seller
+     * General
+        * Admin can enable/disable the map on the store page.
+        * Admin can enable/disable the contact form on the store page
+        * Admin can also enable/disable the store sidebar from theme.
+     * Selling Option
+        * Admin can manage new product status
+        * Admin can set the order status for withdraw
+        * Admin can seth threshold withdraw day for the seller
+        * Admin can change the seller store URL
+        * Admin can also enable/disable the permission of review editing for the seller
+  * Widgets
+     * Best seller widget
+     * Featured seller widget
+     * Store contact widget
+     * Store location widget
 
 And much more. Checkout the [**Pro Version**](http://wedevs.com/theme/dokan/)
 
