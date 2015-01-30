@@ -13,7 +13,7 @@ The multi-vendor plugin for WooCommerce. Start your own marketplace in minutes!
 == Description ==
 
 > #### This is a **Lite** version of the **Dokan** plugin.
-> Get the [**Pro Version**](http://wedevs.com/theme/dokan/) which includes bunch of features that were removed from this version.
+> Get the [**Pro Version**](http://wedevs.com/theme/dokan/?utm_source=wporg&utm_medium=cta&utm_campaign=dokan-lite) which includes bunch of features that were removed from this version.
 
 A multi-vendor plugin leveraging the power of WooCommerce.
 
@@ -23,7 +23,7 @@ A multi-vendor plugin leveraging the power of WooCommerce.
 
   * Every seller gets their own store with a unique URL and branding.
   * Show a store banner with contact details
-  * Contact seller and show the store location map. (Pro feature)
+  * Contact seller and show the store location map. (**Pro feature**)
 
 **Dashboard For Each Seller**
 
@@ -34,14 +34,14 @@ A multi-vendor plugin leveraging the power of WooCommerce.
 
   * As a site owner, get a cut from each sale. That way you and your users both earn money.
   * Take a percentage from each sale. e.g. 20% goes to site owner for every order.
-  * Per seller percentage override. Take different cut from different seller. (Pro feature)
+  * Per seller percentage override. Take different cut from different seller. (**Pro feature**)
 
 **Product Management**
 
   * Create and manage your products from the frontend.
-  * Create simple and/or variable products. (Pro Feature)
-  * Sellers have option to manage product shipping, attributes. (Pro Feature)
-  * Seller can mange downloadable product permission: expiry date and download limit. (Pro Feature)
+  * Create simple and/or variable products. (**Pro Feature**)
+  * Sellers have option to manage product shipping, attributes. (**Pro Feature**)
+  * Seller can mange downloadable product permission: expiry date and download limit. (**Pro Feature**)
 
 **Reports (Pro Feature)**
 
@@ -85,7 +85,7 @@ A multi-vendor plugin leveraging the power of WooCommerce.
      * Store contact widget
      * Store location widget
 
-And much more. Checkout the [**Pro Version**](http://wedevs.com/theme/dokan/)
+And much more. Checkout the [**Pro Version**](http://wedevs.com/theme/dokan/?utm_source=wporg&utm_medium=footer&utm_campaign=dokan-lite)
 
 = Author =
 Brought to you by [Tareq Hasan](http://tareq.wedevs.com) from [weDevs](http://wedevs.com)
