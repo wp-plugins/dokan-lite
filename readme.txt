@@ -1,4 +1,4 @@
-=== Dokan (Lite) ===
+=== Dokan Multivendor (Lite) ===
 Contributors: tareq1988, wedevs
 Donate Link: http://tareq.wedevs.com/donate/
 Tags: woocommerce, multivendor, multi-vendor, paypal, vendor, seller, store, sell, online
