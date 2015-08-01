@@ -7,8 +7,6 @@
  */
 class Dokan_Installer {
 
-    private $theme_version = 1.2;
-
     function do_install() {
 
         // upgrades
@@ -19,12 +17,13 @@ class Dokan_Installer {
         $this->setup_pages();
         $this->woocommerce_settings();
         $this->create_tables();
+        $this->product_design();
 
         dokan_generate_sync_table();
 
         flush_rewrite_rules();
 
-        update_option( 'dokan_theme_version', $this->theme_version );
+        update_option( 'dokan_theme_version', DOKAN_PLUGIN_VERSION );
     }
 
     /**
@@ -40,32 +39,59 @@ class Dokan_Installer {
             return false;
         }
 
-        // do upgrades
-        if ( version_compare( $installed_version, '1.2', '<' ) ) {
-            $this->update_to_12();
+        $dokan_updates = array(
+            '1.2' => 'dokan-upgrade-1.2.php',
+            '2.1' => 'dokan-upgrade-2.1.php',
+            '2.3' => 'dokan-upgrade-2.3.php',
+        );
+
+        foreach ( $dokan_updates as $version => $path ) {
+            if ( version_compare( $installed_version, $version, '<' ) ) {
+                require_once DOKAN_INC_DIR . '/upgrades/' . $path;
+                update_option( 'dokan_theme_version', $version );
+            }
         }
+
+        // finally update to the latest version
+        update_option( 'dokan_theme_version', DOKAN_PLUGIN_VERSION );
     }
 
     /**
-     * Update to version 1.2
+     * Update WooCommerce mayaccount registration settings
+     *
+     * @since 1.0
      *
      * @return void
      */
-    public function update_to_12() {
-        // regenerate sync table for woocommerce 2.2 order status changes
-        dokan_generate_sync_table();
-
-        update_option( 'dokan_theme_version', '1.2' );
-    }
-
     function woocommerce_settings() {
         update_option( 'woocommerce_enable_myaccount_registration', 'yes' );
+    }
+
+    /**
+     * Update product new style options
+     *
+     * when user first install this plugin
+     * the new product style options changed to new
+     *
+     * @since 2.3
+     *
+     * @return void
+     */
+    function product_design() {
+        $installed_version = get_option( 'dokan_theme_version' );
+
+        if ( !$installed_version ) {
+            $options = get_option( 'dokan_selling' );
+            $options['product_style'] = 'new';
+            update_option( 'dokan_selling', $options );
+        }
     }
 
     /**
      * Init dokan user roles
      *
      * @since Dokan 1.0
+     *
      * @global WP_Roles $wp_roles
      */
     function user_roles() {
@@ -182,6 +208,7 @@ class Dokan_Installer {
         include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
         $this->create_withdraw_table();
+        $this->create_announcement_table();
         $this->create_sync_table();
     }
 
@@ -220,4 +247,31 @@ class Dokan_Installer {
 
         dbDelta( $sql );
     }
+
+    /**
+     * Create Announcement table
+     *
+     * @since  2.1
+     *
+     * @return void
+     *
+     */
+    function create_announcement_table() {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'dokan_announcement';
+
+        $sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
+               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+               `user_id` bigint(20) unsigned NOT NULL,
+               `post_id` bigint(11) NOT NULL,
+               `status` varchar(30) NOT NULL,
+              PRIMARY KEY (id)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
+
+        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        dbDelta( $sql );
+
+
+    }
+
 }

@@ -194,7 +194,9 @@ jQuery(function($) {
         },
 
 
-        imageUpload: function() {
+        imageUpload: function(e) {
+            e.preventDefault();
+
             var file_frame,
                 self = $(this);
 
@@ -220,16 +222,18 @@ jQuery(function($) {
                 var wrap = self.closest('.dokan-banner');
                 wrap.find('input.dokan-file-field').val(attachment.id);
                 wrap.find('img.dokan-banner-img').attr('src', attachment.url);
-                $('.image-wrap', wrap).removeClass('dokan-hide');
+                self.parent().siblings('.image-wrap', wrap).removeClass('dokan-hide');
 
-                $('.button-area').addClass('dokan-hide');
+                self.parent('.button-area').addClass('dokan-hide');
             });
 
             // Finally, open the modal
             file_frame.open();
 
         },
-        gragatarImageUpload: function() {
+        gragatarImageUpload: function(e) {
+            e.preventDefault();
+
             var file_frame,
                 self = $(this);
 
@@ -255,8 +259,9 @@ jQuery(function($) {
                 var wrap = self.closest('.dokan-gravatar');
                 wrap.find('input.dokan-file-field').val(attachment.id);
                 wrap.find('img.dokan-gravatar-img').attr('src', attachment.url);
-                $('.gravatar-wrap', wrap).removeClass('dokan-hide');
-                $('.gravatar-button-area').addClass('dokan-hide');
+                self.parent().siblings('.gravatar-wrap', wrap).removeClass('dokan-hide');
+                self.parent('.gravatar-button-area').addClass('dokan-hide');
+
             });
 
             // Finally, open the modal
@@ -264,27 +269,31 @@ jQuery(function($) {
 
         },
 
-        submitSettings: function() {
+        submitSettings: function(form_id) {
 
-            var self = $( "form#settings-form" ),
-                form_data = self.serialize() + '&action=dokan_settings';
+            if ( typeof tinyMCE != 'undefined' ) {
+                tinyMCE.triggerSave();
+            }
 
+            var self = $( "form#" + form_id ),
+                form_data = self.serialize() + '&action=dokan_settings&form_id=' + form_id;
 
             self.find('.ajax_prev').append('<span class="dokan-loading"> </span>');
             $.post(dokan.ajaxurl, form_data, function(resp) {
 
-               self.find('span.dokan-loading').remove();
+                self.find('span.dokan-loading').remove();
                 $('html,body').animate({scrollTop:100});
 
-                if ( resp.success ) {
-
-                    $('.dokan-ajax-response').html( $('<div/>', {
+               if ( resp.success ) {
+                    // Harcoded Customization for template-settings function
+                      $('.dokan-ajax-response').html( $('<div/>', {
                         'class': 'dokan-alert dokan-alert-success',
-                        'html': '<p>' + resp.data + '</p>'
+                        'html': '<p>' + resp.data.msg + '</p>',
                     }) );
 
-                } else {
+                    $('.dokan-ajax-response').append(resp.data.progress);
 
+                }else {
                     $('.dokan-ajax-response').html( $('<div/>', {
                         'class': 'dokan-alert dokan-alert-danger',
                         'html': '<p>' + resp.data + '</p>'
@@ -295,10 +304,10 @@ jQuery(function($) {
 
         validateForm: function(self) {
 
-            $("form#settings-form").validate({
+            $("form#settings-form, form#profile-form, form#store-form, form#payment-form").validate({
                 //errorLabelContainer: '#errors'
                 submitHandler: function(form) {
-                    self.submitSettings();
+                    self.submitSettings( form.getAttribute('id') );
                 },
                 errorElement: 'span',
                 errorClass: 'error',
@@ -353,6 +362,22 @@ jQuery(function($) {
         }
     };
 
+    var Dokan_Coupons = {
+        init: function() {
+            var self = this;
+            this.couponsValidation(self);
+        },
+
+        couponsValidation: function(self) {
+            $("form.coupons").validate({
+                errorElement: 'span',
+                errorClass: 'error',
+                errorPlacement: validatorError,
+                success: validatorSuccess
+            });
+        }
+    };
+
     var Dokan_Seller = {
         init: function() {
             this.validate(this);
@@ -403,8 +428,227 @@ jQuery(function($) {
     $(function() {
         Dokan_Settings.init();
         Dokan_Withdraw.init();
+        Dokan_Coupons.init();
         Dokan_Seller.init();
         Dokan_Add_Seller.init();
+    });
+
+})(jQuery);
+
+// Shipping tab js
+(function($){
+    $(document).ready(function(){
+
+        $('.dokan-shipping-location-wrapper').on('change', '.dps_country_selection', function() {
+            var self = $(this),
+                data = {
+                    country_id : self.find(':selected').val(),
+                    action  : 'dps_select_state_by_country'
+                };
+
+                if ( self.val() == '' || self.val() == 'everywhere' ) {
+                    self.closest('.dps-shipping-location-content').find('table.dps-shipping-states tbody').html('');
+                } else {
+                    $.post( dokan.ajaxurl, data, function(response) {
+                        if( response.success ) {
+                            self.closest('.dps-shipping-location-content').find('table.dps-shipping-states tbody').html(response.data);
+                        }
+                    });
+                }
+        });
+
+    });
+})(jQuery);
+
+
+(function($){
+
+    $(document).ready(function(){
+
+        $('.dps-main-wrapper').on('click', 'a.dps-shipping-add', function(e) {
+            e.preventDefault();
+
+            html = $('#dps-shipping-hidden-lcoation-content');
+            var row = $(html).first().clone().appendTo($('.dokan-shipping-location-wrapper')).show();
+            $('.dokan-shipping-location-wrapper').find('.dps-shipping-location-content').first().find('a.dps-shipping-remove').show();
+
+            $('.tips').tooltip();
+
+            row.removeAttr('id');
+            row.find('input,select').val('');
+            row.find('a.dps-shipping-remove').show();
+        });
+
+        $('.dokan-shipping-location-wrapper').on('click', 'a.dps-shipping-remove', function(e) {
+            e.preventDefault();
+            $(this).closest('.dps-shipping-location-content').remove();
+            $dpsElm = $('.dokan-shipping-location-wrapper').find('.dps-shipping-location-content');
+
+            if( $dpsElm.length == 1) {
+                $dpsElm.first().find('a.dps-shipping-remove').hide();
+            }
+        });
+
+        $('.dokan-shipping-location-wrapper').on('click', 'a.dps-add', function(e) {
+            e.preventDefault();
+
+            var row = $(this).closest('tr').first().clone().appendTo($(this).closest('table.dps-shipping-states'));
+            row.find('input,select').val('');
+            row.find('a.dps-remove').show();
+            $('.tips').tooltip();
+        });
+
+        $('.dokan-shipping-location-wrapper').on('click', 'a.dps-remove', function(e) {
+            e.preventDefault();
+
+            if( $(this).closest('table.dps-shipping-states').find( 'tr' ).length == 1 ){
+                //console.log($(this).closest('.dps-shipping-location-content').find('input,select'));
+                $(this).closest('.dps-shipping-location-content').find('td.dps_shipping_location_cost').show();
+            }
+
+            $(this).closest('tr').remove();
+
+
+        });
+
+        $('.dokan-shipping-location-wrapper').on('change keyup', '.dps_state_selection', function() {
+            var self = $(this);
+
+            if( self.val() == '' || self.val() == '-1' ) {
+                self.closest('.dps-shipping-location-content').find('td.dps_shipping_location_cost').show();
+            } else {
+                self.closest('.dps-shipping-location-content').find('td.dps_shipping_location_cost').hide();
+            }
+        });
+
+        $('.dokan-shipping-location-wrapper .dps_state_selection').trigger('change');
+        $('.dokan-shipping-location-wrapper .dps_state_selection').trigger('keyup');
+
+        $wrap = $('.dokan-shipping-location-wrapper').find('.dps-shipping-location-content');
+
+        if( $wrap.length == 1) {
+            $wrap.first().find('a.dps-shipping-remove').hide();
+        }
+
+    });
+
+})(jQuery);
+
+// For Announcement scripts;
+(function($){
+
+    $(document).ready(function(){
+        $( '.dokan-announcement-wrapper' ).on( 'click', 'a.remove_announcement', function(e) {
+            e.preventDefault();
+
+            if( confirm( dokan.delete_confirm ) ) {
+
+                var self = $(this),
+                    data = {
+                        'action' : 'dokan_announcement_remove_row',
+                        'row_id' : self.data('notice_row'),
+                        '_wpnonce' : dokan.nonce
+                    };
+                self.closest('.dokan-announcement-wrapper-item').append('<span class="dokan-loading" style="position:absolute;top:2px; right:15px"> </span>');
+                var row_count = $('.dokan-announcement-wrapper-item').length;
+                $.post( dokan.ajaxurl, data, function(response) {
+                    if( response.success ) {
+                        self.closest('.dokan-announcement-wrapper-item').find( 'span.dokan-loading' ).remove();
+                        self.closest('.dokan-announcement-wrapper-item').fadeOut(function(){
+                            $(this).remove();
+                            if( row_count == 1 ) {
+                                $( '.dokan-announcement-wrapper' ).html( response.data );
+                            }
+                        });
+                    } else {
+                        alert( dokan.wrong_message );
+                    }
+                });
+            }
+
+        });
+    });
+
+})(jQuery);
+//dokan store seo form submit
+(function($){
+
+    var wrapper = $( '.dokan-store-seo-wrapper' );
+    var Dokan_Store_SEO = {
+
+        init : function() {
+            wrapper.on( 'submit', 'form#dokan-store-seo-form', this.form.validate );
+        },
+
+        form : {
+
+            validate : function(e){
+                e.preventDefault();
+
+                var self = $( this ),
+                data = {
+                    action: 'dokan_seo_form_handler',
+                    data: self.serialize(),
+                };
+                //console.log(data.data);
+                Dokan_Store_SEO.form.submit( data );
+
+                return false;
+            },
+
+            submit : function( data ){
+                var feedback = $('#dokan-seo-feedback');
+                feedback.fadeOut();
+
+                $.post( dokan.ajaxurl, data, function ( resp ) {
+                    if ( resp.success == true ) {
+                        feedback.html(resp.data);
+                        feedback.removeClass('dokan-hide');
+                        feedback.addClass('dokan-alert-success');
+                        feedback.fadeIn();
+                    } else {
+                        feedback.html(resp.data);
+                        feedback.addClass('dokan-alert-danger');
+                        feedback.removeClass('dokan-hide');
+                        feedback.fadeIn();
+                    }
+                } )
+            }
+
+        },
+    };
+
+    $(function() {
+        Dokan_Store_SEO.init();
+    });
+
+})(jQuery);
+
+//localize Validation messages
+(function($){
+    var dokan_messages = DokanValidateMsg;
+
+    dokan_messages.maxlength   = $.validator.format( dokan_messages.maxlength_msg );
+    dokan_messages.minlength   = $.validator.format( dokan_messages.minlength_msg );
+    dokan_messages.rangelength = $.validator.format( dokan_messages.rangelength_msg );
+    dokan_messages.range       = $.validator.format( dokan_messages.range_msg );
+    dokan_messages.max         = $.validator.format( dokan_messages.max_msg );
+    dokan_messages.min         = $.validator.format( dokan_messages.min_msg );
+
+    $.validator.messages = dokan_messages;
+
+    $(document).on('click','#dokan_store_tnc_enable',function(e) {
+        if($(this).is(':checked')) {
+            $('#dokan_tnc_text').show();
+        }else {
+            $('#dokan_tnc_text').hide();
+        }
+    }).ready(function(e){
+        if($('#dokan_store_tnc_enable').is(':checked')) {
+            $('#dokan_tnc_text').show();
+        }else {
+            $('#dokan_tnc_text').hide();
+        }
     });
 
 })(jQuery);

@@ -330,7 +330,7 @@ function dokan_daily_sales() {
             <label for="to"><?php _e( 'To:', 'dokan' ); ?></label>
             <input type="text" name="end_date" id="to" class="datepicker" readonly="readonly" value="<?php echo esc_attr( $end_date ); ?>" />
 
-            <input type="submit" name="dokan_report_filter" value="<?php _e( 'Show', 'dokan' ); ?>" />
+            <input type="submit" name="dokan_report_filter" class="dokan-btn dokan-btn-success dokan-btn-sm dokan-theme" value="<?php _e( 'Show', 'dokan' ); ?>" />
         </div>
     </form>
     <?php
@@ -419,30 +419,31 @@ function dokan_report_sales_overview( $start_date, $end_date, $heading = '' ) {
 
     $average_sales = $total_sales / ( 30 + 1 );
 
-    $legend = array();
-    $legend[] = array(
-        'title' => sprintf( __( '%s sales in this period', 'dokan' ), '<strong>' . wc_price( $total_sales ) . '</strong>' ),
-    );
+    $legend = apply_filters( 'dokan-seller-dashboard-reports-left-sidebar', array(
+        'sales_in_this_period' => array(
+            'title' => sprintf( __( '%s sales in this period', 'dokan' ), '<strong>' . wc_price( $total_sales ) . '</strong>' ),
+        ),
 
-    $legend[] = array(
-        'title' => sprintf( __( '%s average daily sales', 'dokan' ), '<strong>' . wc_price( $average_sales ) . '</strong>' ),
-    );
+        'average_daily_sales' => array(
+            'title' => sprintf( __( '%s average daily sales', 'dokan' ), '<strong>' . wc_price( $average_sales ) . '</strong>' ),
+        ),
 
-    $legend[] = array(
-        'title' => sprintf( __( '%s orders placed', 'dokan' ), '<strong>' . $total_orders . '</strong>' ),
-    );
+        'orders_placed' => array(
+            'title' => sprintf( __( '%s orders placed', 'dokan' ), '<strong>' . $total_orders . '</strong>' ),
+        ),
 
-    $legend[] = array(
-        'title' => sprintf( __( '%s items purchased', 'dokan' ), '<strong>' . $total_items . '</strong>' ),
-    );
+        'items_purchased' => array(
+            'title' => sprintf( __( '%s items purchased', 'dokan' ), '<strong>' . $total_items . '</strong>' ),
+        ),
 
-    $legend[] = array(
-        'title' => sprintf( __( '%s charged for shipping', 'dokan' ), '<strong>' . wc_price( $total_shipping ) . '</strong>' ),
-    );
+        'charged_for_shipping' => array(
+            'title' => sprintf( __( '%s charged for shipping', 'dokan' ), '<strong>' . wc_price( $total_shipping ) . '</strong>' ),
+        ),
 
-    $legend[] = array(
-        'title' => sprintf( __( '%s worth of coupons used', 'dokan' ), '<strong>' . wc_price( $total_coupons ) . '</strong>' ),
-    );
+        'worth_of_coupons_used' => array(
+            'title' => sprintf( __( '%s worth of coupons used', 'dokan' ), '<strong>' . wc_price( $total_coupons ) . '</strong>' ),
+        ),
+    ) );
     ?>
     <div id="poststuff" class="dokan-reports-wrap">
         <div class="dokan-reports-sidebar report-left dokan-left">
@@ -697,7 +698,7 @@ function dokan_top_sellers() {
             <input type="text" class="datepicker" name="end_date" id="to" readonly="readonly" value="<?php echo esc_attr( date('Y-m-d', $end_date) ); ?>" />
         </div>
 
-        <input type="submit" class="btn btn-success btn-sm" value="<?php _e( 'Show', 'dokan' ); ?>" />
+        <input type="submit" class="dokan-btn dokan-btn-success dokan-btn-sm dokan-theme" value="<?php _e( 'Show', 'dokan' ); ?>" />
     </form>
 
 
@@ -801,7 +802,7 @@ function dokan_top_earners() {
             <input type="text" class="datepicker" name="end_date" id="to" readonly="readonly" value="<?php echo esc_attr( date('Y-m-d', $end_date) ); ?>" />
         </div>
 
-        <input type="submit" class="btn btn-theme btn-sm" value="<?php _e( 'Show', 'dokan' ); ?>" />
+        <input type="submit" class="dokan-btn dokan-btn-success dokan-btn-sm dokan-theme" value="<?php _e( 'Show', 'dokan' ); ?>" />
     </form>
 
     <table class="table table-striped">

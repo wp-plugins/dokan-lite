@@ -10,14 +10,14 @@
 .dokan-form-control {
     background-color: #ffffff;
     background-image: none;
-    border: 1px solid #cccccc;
+    border: 1px solid @borderColor;
     padding:4px 6px;
-    border-radius: 4px;
+    border-radius: 0;
     color: #555555;
     display: block;
     font-size: 14px;
     min-height: 26px;
-    line-height: 30px;
+    line-height: 26px;
     vertical-align: middle;
     width: 100%;
     margin: 0;
@@ -29,6 +29,16 @@
 
 textarea.dokan-form-control {
     height:auto;
+}
+
+select.dokan-form-control {
+    height:32px;
+}
+
+.dokan-radio-inline + .dokan-radio-inline,
+.dokan-checkbox-inline + .dokan-checkbox-inline {
+    margin-left: 10px;
+    margin-top: 0;
 }
 
 
@@ -99,7 +109,7 @@ textarea.dokan-form-control {
     color: #555;
     text-align: center;
     background-color: #eee;
-    border: 1px solid #ccc;
+    border: 1px solid @borderColor;
     border-radius: 4px;
 
     // Nuke default margins from checkboxes and radios to vertically center within.
@@ -208,19 +218,33 @@ textarea.dokan-form-control {
     }
 }
 
+.dokan-row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.dokan-w1 {
+    width: 8.33333333%;
+    float:left;
+}
+
+.dokan-w2 {
+    width: 16.66666667%;
+    float:left;
+}
+
 .dokan-w3 {
-    width:23%;
+    width:25%;
     float:left;
 }
 
 .dokan-w4 {
-    width:30%;
+    width: 33.33333333%;
     float:left;
 }
 
-
 .dokan-w5 {
-    width:40%;
+    width: 41.66666667%;
     float:left;
 }
 
@@ -234,7 +258,27 @@ textarea.dokan-form-control {
 }
 
 .dokan-w8 {
-    width:66.6667%;
+    width: 58.33333333%;
+    float:left;
+}
+
+.dokan-w9 {
+    width: 75%;
+    float:left;
+}
+
+.dokan-w10 {
+    width: 83.33333333%;
+    float:left;
+}
+
+.dokan-w11 {
+    width: 91.66666667%;
+    float:left;
+}
+
+.dokan-w12 {
+    width: 100%;
     float:left;
 }
 

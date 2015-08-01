@@ -20,7 +20,6 @@ function dokan_withdraw_register_methods() {
     return apply_filters( 'dokan_withdraw_methods', $methods );
 }
 
-
 /**
  * Get registered withdraw methods suitable for Settings Api
  *
@@ -37,7 +36,6 @@ function dokan_withdraw_get_methods() {
     return $methods;
 }
 
-
 /**
  * Get active withdraw methods.
  *
@@ -50,7 +48,6 @@ function dokan_withdraw_get_active_methods() {
 
     return $methods;
 }
-
 
 /**
  * Get a single withdraw method based on key
@@ -68,8 +65,6 @@ function dokan_withdraw_get_method( $method_key ) {
     return false;
 }
 
-
-
 /**
  * Get title from a withdraw method
  *
@@ -85,8 +80,6 @@ function dokan_withdraw_get_method_title( $method_key ) {
 
     return '';
 }
-
-
 
 /**
  * Callback for PayPal in store settings
@@ -110,7 +103,27 @@ function dokan_withdraw_method_paypal( $store_settings ) {
     <?php
 }
 
+/**
+ * Callback for Skrill in store settings
+ *
+ * @global WP_User $current_user
+ * @param array $store_settings
+ */
+function dokan_withdraw_method_skrill( $store_settings ) {
+    global $current_user;
 
+    $email = isset( $store_settings['payment']['skrill']['email'] ) ? esc_attr( $store_settings['payment']['skrill']['email'] ) : $current_user->user_email ;
+    ?>
+    <div class="dokan-form-group">
+        <div class="dokan-w8">
+            <div class="dokan-input-group">
+                <span class="dokan-input-group-addon"><?php _e( 'E-mail', 'dokan' ); ?></span>
+                <input value="<?php echo $email; ?>" name="settings[skrill][email]" class="dokan-form-control email" placeholder="you@domain.com" type="text">
+            </div>
+        </div>
+    </div>
+    <?php
+}
 
 /**
  * Callback for Bank in store settings
@@ -157,8 +170,6 @@ function dokan_withdraw_method_bank( $store_settings ) {
     <?php
 }
 
-
-
 /**
  * Get withdraw counts, used in admin area
  *
@@ -193,4 +204,24 @@ function dokan_get_withdraw_count() {
     return $counts;
 }
 
+/**
+ * Get active withdraw order status.
+ *
+ * Default is 'completed', 'processing', 'on-hold'
+ *
+ */
+function dokan_withdraw_get_active_order_status() {
+    $order_status = dokan_get_option( 'withdraw_order_status', 'dokan_selling', array( 'wc-completed' ) );
 
+    return apply_filters( 'dokan_withdraw_active_status', $order_status );
+}
+
+/**
+ * get comma seperated value from "dokan_withdraw_get_active_order_status()" return array
+ * @param array array
+ */
+function dokan_withdraw_get_active_order_status_in_comma() {
+    $order_status = dokan_withdraw_get_active_order_status();
+    $status = "'" . implode("', '", $order_status ) . "'";
+    return $status;
+}

@@ -71,6 +71,49 @@ class Dokan_Email {
 
 
     /**
+     * Send email to seller from the seller contact form
+     *
+     * @param string $seller_email
+     * @param string $from_name
+     * @param string $from_email
+     * @param string $message
+     */
+    function contact_seller( $seller_email, $from_name, $from_email, $message ) {
+        $template = DOKAN_INC_DIR . '/emails/contact-seller.php';
+        ob_start();
+        include $template;
+        $body = ob_get_clean();
+
+        $find = array(
+            '%from_name%',
+            '%from_email%',
+            '%user_ip%',
+            '%user_agent%',
+            '%message%',
+            '%site_name%',
+            '%site_url%'
+        );
+
+        $replace = array(
+            $from_name,
+            $from_email,
+            dokan_get_client_ip(),
+            $this->get_user_agent(),
+            $message,
+            $this->get_from_name(),
+            home_url()
+        );
+
+        $subject = sprintf( __( '"%s" sent you a message from your "%s" store', 'dokan' ), $from_name, $this->get_from_name() );
+        $body = str_replace( $find, $replace, $body);
+        $headers = array( "Reply-To: {$from_name}<{$from_email}>" );
+
+        $this->send( $seller_email, $subject, $body, $headers );
+        do_action( 'after_send_contact_seller_mail', $seller_email, $subject, $body );
+    }
+
+
+    /**
      * Prepare body for withdraw email
      *
      * @param string $body
