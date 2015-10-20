@@ -312,9 +312,8 @@ function dokan_variable_product_type_options() {
                     jQuery(el).block({ message: null, overlayCSS: { background: '#fff url(<?php echo $woocommerce->plugin_url(); ?>/assets/images/ajax-loader.gif) no-repeat center', opacity: 0.6 } });
 
                     var data = {
-                        action: 'woocommerce_remove_variations',
+                        action: 'dokan_remove_variation',
                         variation_ids: variation,
-                        security: '<?php echo wp_create_nonce("delete-variations"); ?>'
                     };
 
                     jQuery.post('<?php echo admin_url('admin-ajax.php'); ?>', data, function(response) {
@@ -1850,8 +1849,18 @@ function dokan_save_variations( $post_id ) {
  */
 function dokan_create_sub_order( $parent_order_id ) {
 
-    if(  get_post_meta( $parent_order_id, 'has_sub_order' ) == true ){
-        return;
+    if ( get_post_meta( $parent_order_id, 'has_sub_order' ) == true ) {
+        $args = array(
+            'post_parent' => $parent_order_id,
+            'post_type'   => 'shop_order',
+            'numberposts' => -1,
+            'post_status' => 'any'
+        );
+        $child_orders = get_children( $args );
+
+        foreach ( $child_orders as $child ) {
+            wp_delete_post( $child->ID );
+        }
     }
 
     $parent_order = new WC_Order( $parent_order_id );
@@ -1947,8 +1956,9 @@ function dokan_create_seller_order( $parent_order, $seller_id, $seller_products 
         $discount = dokan_sub_order_get_total_coupon( $order_id );
 
         // calculate the total
-        $order_in_total = $order_total + $shipping_cost + $order_tax - $discount;
-
+        $order_in_total = $order_total + $shipping_cost + $order_tax;
+        //$order_in_total = $order_total + $shipping_cost + $order_tax - $discount;
+                
         // set order meta
         update_post_meta( $order_id, '_payment_method',         $parent_order->payment_method );
         update_post_meta( $order_id, '_payment_method_title',   $parent_order->payment_method_title );

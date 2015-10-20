@@ -145,6 +145,26 @@ A. Obviously, you can use this on a single seller site to give them a nice front
 
 == Changelog ==
 
+= v2.4.7 -> October 20, 2015 =
+---------------------
+- [fix] Fix Coupon discount redundancy
+- [fix] Fix product gallery image delete issue on tab view
+- [fix] Fix translation issue on user migration form
+- [fix] Fix Store listing template view for not logged-in user
+- [fix] parent sub-order creation on unsuccessful payment by card
+- [fix] Store page breadcrumb fixed to show Store name and listing link properly
+
+
+= v2.4.6 -> October 12, 2015 =
+
+- [tweak] Added terms and condition option field on Registration form
+- [fix] Remove required for product per page field on store settings
+- [fix] Fix delete variation product issue on tab view for seller
+- [fix] Fix redudant data for guest users
+- [fix] Fix responsive issue on front page product listing
+- [fix] Seller store banner size to cover
+- [fix] Store template fix for twentytwelve theme
+
 
 = v2.4.5 -> September 14, 2015 =
 

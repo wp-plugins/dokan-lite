@@ -546,10 +546,10 @@ function dokan_myorder_login_check(){
     }
 }
 
-// Redner Store listing shortcode
-add_shortcode( 'dokan-stores', 'doakn_store_listing_content' );
+//Render Store listing shortcode as it appears without logged in
+add_shortcode( 'dokan-stores', 'store_listing' );
 
-/**
+ /**
  * Displays the store lists
  *
  * @since 2.4
@@ -558,7 +558,7 @@ add_shortcode( 'dokan-stores', 'doakn_store_listing_content' );
  *
  * @return string
  */
-function doakn_store_listing_content( $atts ) {
+function store_listing( $atts ) {
     global $post;
 
     /**
@@ -668,4 +668,3 @@ function doakn_store_listing_content( $atts ) {
 
     return apply_filters( 'dokan_seller_listing', $content, $attr );
 }
-
