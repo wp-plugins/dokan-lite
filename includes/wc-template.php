@@ -52,10 +52,18 @@ function dokan_product_seller_tab( $val ) {
     $author     = get_user_by( 'id', $product->post->post_author );
     $store_info = dokan_get_store_info( $author->ID );
 
-    dokan_get_template_part('global/product-tab', '', array(
-        'author' => $author,
-        'store_info' => $store_info,
-    ) );
+    if ($author) {
+        dokan_get_template_part(
+            'global/product-tab',
+            '',
+            [
+                'author'     => $author,
+                'store_info' => $store_info,
+            ]
+        );
+    } else {
+        echo "No vendor information found!";
+    }
 }
 
 
